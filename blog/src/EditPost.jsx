@@ -1,19 +1,21 @@
 import { Redirect } from "react-router-dom";
 import { auth, firestore } from "./firebase";
+import {useState} from "react"
 import "./post.css";
 let EditPost = (props) => {
+  let [posts,setpost] = useState([]);
   let str = "";
-
+  
   return (
     <>
       {props.userid ? (
         <>
-          <div class="input-group ">
-            <div class="input-group-prepend ">
-              <span class="input-group-text">Edit Post</span>
+          <div className="input-group ">
+            <div className="input-group-prepend ">
+              <span className="input-group-text">Edit Post</span>
             </div>
             <textarea
-              class="form-control"
+              className="form-control"
               placeholder="What's Happening?"
               aria-label="With textarea"
               onChange={(el) => {
@@ -22,15 +24,23 @@ let EditPost = (props) => {
             ></textarea>
             <button
               type="button"
-              class="btn btn-primary"
-              onClick={() => {
+              className="btn btn-primary"
+              onClick={async () => {
                 console.log(str);
 
                 if (str != "") {
-                  firestore.collection(`${props.userid}`).add({ body: str });
+                 let data_= await firestore.collection(`users`).doc(props.userid).get();
+                 console.log(data_.data().posts);
+                let arr = data_.data().posts;
+                arr.push(str);
+                 firestore.collection(`users`).doc(`${props.userid}`).update({
+                  posts: arr
+                });
                 }
 
                 str = "";
+
+                document.querySelector(".form-control").value ="";
               }}
             >
               Post
@@ -38,10 +48,10 @@ let EditPost = (props) => {
           </div>
           <button
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger"
             onClick={() => {
-              auth.signOut();
               props.idhandler(null);
+              auth.signOut();
             }}
           >
             Logout

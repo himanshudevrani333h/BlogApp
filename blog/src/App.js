@@ -16,19 +16,9 @@ let App = () => {
     else setuserID(null);
   };
 
-  useEffect(() => {
-    if (userid) createUserCollectionSet(userid);
-  }, []);
-  // if (userid) {
-  // }
-
   return (
     <Router>
-      <Redirect to="/login"></Redirect>
       <Switch>
-        <Route path="/login">
-          <Login idhandler={idhandler} userid={userid} />
-        </Route>
         <Route path="/posts">
           <div className="row">
             <div className="col-4  mt-4">
@@ -36,6 +26,9 @@ let App = () => {
             </div>
             <Posts userid={userid} />
           </div>
+        </Route>
+        <Route path="/">
+          <Login idhandler={idhandler} userid={userid} />
         </Route>
       </Switch>
     </Router>

@@ -1,7 +1,7 @@
 import firebase from "firebase"
 
 function createUserCollectionSet(user){
-    firebase.firestore().collection(`${user}`).set({})
+    firebase.firestore().collection(`users`).doc(`${user}`).add()
  }
 
 //  function createUserCollectionAdd(user,data){
