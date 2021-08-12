@@ -1,11 +1,9 @@
 import { Redirect } from "react-router-dom";
 import { auth, firestore } from "./firebase";
-import {useState} from "react"
 import "./post.css";
 let EditPost = (props) => {
-  let [posts,setpost] = useState([]);
   let str = "";
-  
+
   return (
     <>
       {props.userid ? (
@@ -29,18 +27,21 @@ let EditPost = (props) => {
                 console.log(str);
 
                 if (str != "") {
-                 let data_= await firestore.collection(`users`).doc(props.userid).get();
-                 console.log(data_.data().posts);
-                let arr = data_.data().posts;
-                arr.push(str);
-                 firestore.collection(`users`).doc(`${props.userid}`).update({
-                  posts: arr
-                });
+                  let data_ = await firestore
+                    .collection(`users`)
+                    .doc(props.userid)
+                    .get();
+                  console.log(data_.data().posts);
+                  let arr = data_.data().posts;
+                  arr.push(str);
+                  firestore.collection(`users`).doc(`${props.userid}`).update({
+                    posts: arr,
+                  });
                 }
 
                 str = "";
 
-                document.querySelector(".form-control").value ="";
+                document.querySelector(".form-control").value = "";
               }}
             >
               Post

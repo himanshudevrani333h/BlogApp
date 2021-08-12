@@ -1,11 +1,7 @@
 import EditPost from "./EditPost";
 import Login from "./Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-// import { firestore } from "./firebase";
-// import firebase from "firebase";
-import createUserCollectionSet from "./db";
+import { useState } from "react";
 import Posts from "./Posts";
 
 let App = () => {
